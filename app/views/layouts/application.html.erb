@@ -9,10 +9,17 @@
 <body>
   <div class="container">
   	<ul class="nav nav-tabs">
-  		<li><%= link_to "Home", welcome_index_path %></li>
+  		<li><%= link_to "Home", root_path %></li>
   		<li><%= link_to "About", welcome_about_path %></li>
   		<div class="pull-right user-info">
-        
+        <% if current_user %>
+          <%= image_tag "https://raw.githubusercontent.com/intridea/authbuttons/master/png/#{current_user.provider}_32.png", alt: current_user.name %>
+          Signed in as <strong><%= current_user.name %></strong>
+          -
+          <%= link_to 'Log Out', session_path(current_user.id), method: :delete %>
+        <% else %>
+          <%= "Sign In with your favourite social account" %>
+        <% end %>
   		</div>
   	</ul>
   	<% if flash[:notice] %>

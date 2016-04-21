@@ -1,2 +1,11 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<div class="jumbotron">
+  <h1>Blocitoff <small>self-destructing to-do application</small></h1>
+
+  <h3>You can sign in with your favourite social account:</h3>
+  <ul>
+    <li><%= link_to "Facebook", '/auth/facebook' %></li>
+    <li><%= link_to "Google", '/auth/google' %></li>
+    <li><%= link_to "LinkedIn", '/auth/linkedin' %></li>
+    <li><%= link_to "Twitter", '/auth/twitter' %></li>
+  </ul>
+</div>
