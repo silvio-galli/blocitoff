@@ -34,3 +34,4 @@ end
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'omniauth-twitter'
+gem 'omniauth-facebook'
