@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     @user = User.find_or_create_from_auth_hash(auth_hash)
     session[:user_id] = @user.id
     flash[:notice] = "You've been signed in with your Google account."
-    redirect_to root_path
+    redirect_to user_path(@user)
   end
 
   def destroy
