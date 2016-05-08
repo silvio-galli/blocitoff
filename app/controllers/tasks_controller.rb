@@ -16,6 +16,34 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+    @task = Task.find(params[:id])
+  end
+
+  def update
+    @task= Task.find(params[:id])
+    if params[:completed]
+      @task.completed = params[:completed]
+      if @task.save
+        flash[:notice] = "Task marked as completed."
+        redirect_to user_path(@task)
+      else
+        flash[:alert] = "Task was not marked as completed. Please try again."
+        redirect_to user_path(@task)
+      end
+    end
+    if params[:deleted]
+      @task.completed = params[:deleted]
+      if @task.save
+        flash[:notice] = "Task successfully deleted."
+        redirect_to user_path(@task)
+      else
+        flash[:alert] = "Something went wrong. Please try again."
+        redirect_to user_path(@task)
+      end
+    end
+  end
+
   private
 
   def task_params

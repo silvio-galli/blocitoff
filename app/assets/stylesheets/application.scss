@@ -16,6 +16,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-.pull-right {
+.user-info {
   padding: 10px 15px;
+}
+.user-info .pull-right {
+  margin-left: 10px;
+  padding: 0;
 }

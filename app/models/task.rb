@@ -3,4 +3,6 @@ class Task < ActiveRecord::Base
 
   validates :title, presence: true, length: { minimum: 3 }
   validates :expected_end_date, presence: true
+
+  default_scope { order('expected_end_date ASC') }
 end
