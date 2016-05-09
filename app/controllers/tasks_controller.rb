@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.update(user_id: session[:user_id])
+    @task.user_id = session[:user_id]
     if @task.save
       flash[:notice] = "Your new task has been successfully created!"
       redirect_to user_path(@task)
@@ -22,25 +22,24 @@ class TasksController < ApplicationController
 
   def update
     @task= Task.find(params[:id])
-    if params[:completed]
-      @task.completed = params[:completed]
-      if @task.save
-        flash[:notice] = "Task marked as completed."
-        redirect_to user_path(@task)
-      else
-        flash[:alert] = "Task was not marked as completed. Please try again."
-        redirect_to user_path(@task)
-      end
+=begin
+    if params[:task][:notes]
+      @task.notes = params[:task][:notes]
     end
-    if params[:deleted]
-      @task.completed = params[:deleted]
-      if @task.save
-        flash[:notice] = "Task successfully deleted."
-        redirect_to user_path(@task)
-      else
-        flash[:alert] = "Something went wrong. Please try again."
-        redirect_to user_path(@task)
-      end
+    if params[:task][:completed]
+      @task.completed = params[:task][:completed]
+    end
+    if params[:task][:deleted]
+      @task.deleted = params[:task][:deleted]
+    end
+=end
+    @task.assign_attributes(update_task_params)
+    if @task.save
+      flash[:notice] = "Task successfully updated."
+      redirect_to user_path(@task)
+    else
+      flash[:alert] = "Something went wrong. Please try again."
+      redirect_to user_path(@task)
     end
   end
 
@@ -48,5 +47,9 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :notes, :expected_end_date, :user_id)
+  end
+
+  def update_task_params
+    params.require(:task).permit(:completed, :deleted)
   end
 end
