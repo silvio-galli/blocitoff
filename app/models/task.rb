@@ -4,5 +4,12 @@ class Task < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3 }
   validates :expected_end_date, presence: true
 
-  default_scope { order('expected_end_date ASC') }
+  after_initialize { self.completed ||= false }
+  after_initialize { self.uncompleted ||= false }
+  after_initialize { self.deleted ||= false }
+
+  scope :active, -> { where(:completed => false, :deleted => false) }
+  scope :completed, -> { where(completed: true) }
+  scope :deleted, -> { where(deleted: true) }
+  scope :uncompleted, -> { where(uncompleted: true) }
 end

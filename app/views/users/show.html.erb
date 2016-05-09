@@ -17,49 +17,66 @@
         <th></th>
         <th></th>
       </tr>
-      <% @tasks.each do |task| %>
+      <% @active_tasks.each do |task| %>
         <tr>
-          <% if task.completed %>
-            <td class="text-muted"><%= task.title %></td>
-            <td class="text-muted">completed in <%= completion_time(task) %></td>
-            <td><span class="glyphicon glyphicon-ok text-muted"></span></td>
-            <td></td>
-          <% elsif task.deleted %>
-            <td class="text-muted"><del><%= task.title %></del></td>
-            <td class="text-muted"><del>deleted after <%= completion_time(task) %></del></td>
-            <td></td>
-            <td><strong>deleted</strong></td>
-          <% else %>
-            <td><%= task.title %></td>
-            <td><%= time_left(task) %></td>
-            <td>
-              <%= form_for task do |t| %>
-                <%= t.hidden_field :completed, id: "task_#{task.id}_completed", value: "1" %>
-                <%= t.submit "completed", class: 'btn btn-success' %>
-              <% end %>
-            </td>
-            <td>
-              <%= form_for task do |t| %>
-                <%= t.hidden_field :deleted, id: "task_#{task.id}_completed", value: "1" %>
-                <%= t.submit "delete", class: 'btn btn-danger' %>
-              <% end %>
-            </td>
-          <% end %>
+          <td><%= task.title %></td>
+          <td><%= time_left(task) %></td>
+          <td>
+            <%= form_for task do |t| %>
+              <%= t.hidden_field :completed, id: "task_#{task.id}_completed", value: "1" %>
+              <%= t.submit "completed", class: 'btn btn-success' %>
+            <% end %>
+          </td>
+          <td>
+            <%= form_for task do |t| %>
+              <%= t.hidden_field :deleted, id: "task_#{task.id}_deleted", value: "1" %>
+              <%= t.submit "delete", class: 'btn btn-danger' %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </table>
   </div>
   <div class=col-md-4>
-    <h3>Completed</h3>
-    <table>
-    </table>
+    <% if @completed_tasks == [] %>
+      <h3>No completed tasks, for the moment</h3>
+    <% else %>
+      <h3>Completed tasks</h3>
+      <table class="table">
+        <% @completed_tasks.limit(5).each do |task| %>
+          <tr>
+            <td class="text-muted"><%= task.title %></td>
+            <td class="text-muted">completed in <%= completion_time(task) %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
 
-    <h3>Uncompleted</h3>
-    <table>
-    </table>
+    <% if @deleted_tasks == [] %>
+      <h3>No deleted tasks, for the moment</h3>
+    <% else %>
+      <h3>Deleted tasks</h3>
+      <table class="table">
+        <% @deleted_tasks.limit(5).each do |task| %>
+          <tr>
+            <td class="text-muted"><del><%= task.title %></del></td>
+            <td class="text-muted"><del>deleted after <%= deletion_time(task) %></del></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
 
-    <h3>Deleted</h3>
-    <table>
-    </table>
+    <% if @uncompleted_tasks == [] %>
+      <h3>No uncompleted tasks, for the moment</h3>
+    <% else %>
+      <h3>Uncompleted tasks</h3>
+      <table class="table">
+        <% @uncompleted_tasks.limit(5).each do |task| %>
+          <tr>
+            <td class="text-muted"><del><%= task.title %></del></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
   </div>
 </div>

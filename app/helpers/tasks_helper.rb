@@ -5,6 +5,11 @@ module TasksHelper
   end
 
   def completion_time(task)
+    time = (task.actual_end_date.to_time - task.created_at)
+    distance_of_time_in_words(time)
+  end
+
+  def deletion_time(task)
     time = (task.updated_at - task.created_at)
     distance_of_time_in_words(time)
   end
