@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+50.times do
+  task = Task.create!(
+    title: Faker::Lorem::sentence,
+    expected_end_date: Faker::Time.between(DateTime.now - 30, DateTime.now + 30),
+    user_id: "1",
+  )
+end
+
+puts "Seed finished"
+puts "Created #{Task.count} tasks"
