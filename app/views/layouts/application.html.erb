@@ -13,10 +13,12 @@
   		<li><%= link_to "About", welcome_about_path %></li>
   		<div class="pull-right user-info">
         <% if current_user %>
-          <%= image_tag "#{current_user.image}", size: "32", alt: current_user.name %>
-          Signed in as <strong><%= current_user.name %></strong>
-          -
-          <%= link_to 'Log Out', session_path(current_user.id), method: :delete %>
+          <%= image_tag "#{current_user.image}", size: "48", alt: current_user.name %>
+          <div class="pull-right">
+          	Signed in as <strong><%= link_to current_user.name, user_path(current_user), title: "Go to your profile page." %></strong>
+            <br />
+            <%= link_to 'Log Out', session_path(current_user.id), method: :delete %>
+          </div>
         <% else %>
           <%= link_to "Sign In with your Google account", '/auth/google_oauth2' %>
         <% end %>
