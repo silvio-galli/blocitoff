@@ -21,24 +21,32 @@ class TasksController < ApplicationController
   end
 
   def update
+    @user = User.find(session[:user_id])
     @task= Task.find(params[:id])
 
     if params[:task][:completed]
+      attribute = "completed"
       @task.completed = params[:task][:completed]
       @task.actual_end_date = Time.now
     end
     if params[:task][:deleted]
+      attribute = "deleted"
       @task.update(deleted: params[:task][:deleted])
       # I need this call to the database to set updated_at field at the time of deletion,
       # because I use updated_at to calculate how many hours/days have passed from creation to deletion
     end
 
     if @task.save
-      flash[:notice] = "Task successfully updated."
-      redirect_to user_path(@task)
+      flash[:notice] = "Task successfully #{attribute}."
+      # redirect_to user_path(@task)
     else
       flash[:alert] = "Something went wrong. Please try again."
-      redirect_to user_path(@task)
+      # redirect_to user_path(@task)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
