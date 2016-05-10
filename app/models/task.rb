@@ -8,7 +8,7 @@ class Task < ActiveRecord::Base
   after_initialize { self.uncompleted ||= false }
   after_initialize { self.deleted ||= false }
 
-  scope :active, -> { where(:completed => false, :deleted => false) }
+  scope :active, -> { where(:completed => false, :deleted => false, :uncompleted => false) }
   scope :completed, -> { where(completed: true) }
   scope :deleted, -> { where(deleted: true) }
   scope :uncompleted, -> { where(uncompleted: true) }

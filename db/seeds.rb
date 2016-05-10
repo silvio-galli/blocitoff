@@ -15,5 +15,14 @@
   )
 end
 
+5.times do
+  task = Task.create!(
+    title: Faker::Lorem::sentence,
+    created_at: Faker::Time.between(DateTime.now - 30, DateTime.now - 20),
+    expected_end_date: Faker::Time.between(DateTime.now - 21, DateTime.now - 10),
+    user_id: "1",
+  )
+end
+
 puts "Seed finished"
 puts "Created #{Task.count} tasks"
