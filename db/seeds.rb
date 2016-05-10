@@ -10,7 +10,7 @@
   task = Task.create!(
     title: Faker::Lorem::sentence,
     created_at: Faker::Time.between(DateTime.now - 30, DateTime.now - 1),
-    expected_end_date: Faker::Time.between(DateTime.now, DateTime.now + 30),
+    expected_end_date: Faker::Time.between(DateTime.now.end_of_day, DateTime.now + 30),
     user_id: "1",
   )
 end
