@@ -1,0 +1,13 @@
+<% if params[:task][:completed] %>
+  $('#task_<%= @task.id %>_table_row').hide();
+  $('#no_completed_tasks').hide();
+  $('#completed_tasks_table').prepend("<tr id=\"task-<%= @task.id %>-ajax-row\"></tr>");
+  $('#task-<%= @task.id %>-ajax-row').html("<td class=\"text-muted\"><%= @task.title %></td><td class=\"text-muted\">completed in <%= completion_time(@task) %></td>");
+<% end %>
+
+<% if params[:task][:deleted] %>
+  $('#task_<%= @task.id %>_table_row').hide();
+  $('#no_deleted_tasks').hide();
+  $('#deleted_tasks_table').prepend("<tr id=\"task-<%= @task.id %>-ajax-row\"></tr>");
+  $('#task-<%= @task.id %>-ajax-row').html("<td class=\"text-muted\"><del><%= @task.title %></del></td><td class=\"text-muted\"><del>deleted after <%= deletion_time(@task) %></del></td>");
+<% end %>
