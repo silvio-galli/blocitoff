@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 20160505211504) do
     t.text     "notes"
     t.string   "expected_end_date", null: false
     t.string   "actual_end_date"
-    t.boolean  "completed"
-    t.boolean  "uncompleted"
-    t.boolean  "deleted"
+    t.boolean  "completed", default: false
+    t.boolean  "uncompleted", default: false
+    t.boolean  "deleted", default: false
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
