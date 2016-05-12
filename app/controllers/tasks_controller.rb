@@ -26,14 +26,13 @@ class TasksController < ApplicationController
 
     if params[:task][:completed]
       attribute = "completed"
-      @task.actual_end_date = Time.now
       @task.completed = params[:task][:completed]
+      @task.actual_end_date = Time.now
     end
     if params[:task][:deleted]
       attribute = "deleted"
       @task.update(deleted: params[:task][:deleted])
-      # I need this call to the database to set updated_at field at the time of deletion,
-      # because I use updated_at to calculate how many hours/days have passed from creation to deletion
+      @task.deletion_date = Time.now
     end
 
     if @task.save

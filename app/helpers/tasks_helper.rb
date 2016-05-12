@@ -10,7 +10,7 @@ module TasksHelper
   end
 
   def deletion_time(task)
-    time = (task.updated_at - task.created_at)
+    time = (task.deletion_date - task.created_at)
     distance_of_time_in_words(time)
   end
 end
