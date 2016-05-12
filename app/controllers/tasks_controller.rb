@@ -26,8 +26,8 @@ class TasksController < ApplicationController
 
     if params[:task][:completed]
       attribute = "completed"
-      @task.completed = params[:task][:completed]
       @task.actual_end_date = Time.now
+      @task.completed = params[:task][:completed]
     end
     if params[:task][:deleted]
       attribute = "deleted"
