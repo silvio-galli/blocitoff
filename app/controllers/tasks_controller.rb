@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
   def new
     @task = Task.new
-    @user = User.find(session[:user_id])
   end
 
   def create
@@ -21,7 +20,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    @user = User.find(session[:user_id])
     @task= Task.find(params[:id])
 
     if params[:task][:completed]
@@ -37,10 +35,22 @@ class TasksController < ApplicationController
 
     if @task.save
       flash[:notice] = "Task successfully #{attribute}."
-      # redirect_to user_path(@task)
     else
       flash[:alert] = "Something went wrong. Please try again."
-      # redirect_to user_path(@task)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def destroy
+    @task = Task.find(params[:id])
+    if @task.destroy
+      flash.now[:alert] = "You cannot delete this task. It's someone else property."
+    else
+      flash[:notice] = "Task permanently deleted."
     end
 
     respond_to do |format|

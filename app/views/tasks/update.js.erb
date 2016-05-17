@@ -1,13 +1,17 @@
 <% if params[:task][:completed] %>
-  $('#task_<%= @task.id %>_table_row').hide();
-  $('#no_completed_tasks').hide();
-  $('#completed_tasks_table').prepend("<tr id=\"task-<%= @task.id %>-ajax-row\"></tr>");
-  $('#task-<%= @task.id %>-ajax-row').html("<td class=\"text-muted\"><%= @task.title %></td><td class=\"text-muted\">completed in <%= completion_time(@task) %></td>");
+  $('#task_<%= @task.id %>_table_row').fadeOut("slow");
+  $('#no_completed_tasks').fadeOut();
+  $("<tr id=\"task_<%= @task.id %>_ajax_row\" class=\"bg-success\"></tr>").fadeIn(1600, function() {
+    var trashIcon = "<a class=\"glyphicon glyphicon-trash\" title=\"Attention: if you continue, this task will be PERMANENTLY ERASED from the database.\" data-confirm=\"!!!ATTENTION!!!\nThe data of &quot; <%= @task.title %> &quot; task will be PERMANENTLY ERASED.\nDo you want to continue?\" data-remote=\"true\" rel=\"nofollow\" data-method=\"delete\" href=\"/tasks/<%= @task.id %>\"></a>";
+    $(this).prependTo('#completed_tasks_table').html("<td class=\"text-muted\"><%= @task.title %></td><td class=\"text-muted\">completed in <%= completion_time(@task) %></td><td class=\"text-muted\">" + trashIcon + "</td>");
+  });
 <% end %>
 
 <% if params[:task][:deleted] %>
-  $('#task_<%= @task.id %>_table_row').hide();
-  $('#no_deleted_tasks').hide();
-  $('#deleted_tasks_table').prepend("<tr id=\"task-<%= @task.id %>-ajax-row\"></tr>");
-  $('#task-<%= @task.id %>-ajax-row').html("<td class=\"text-muted\"><del><%= @task.title %></del></td><td class=\"text-muted\"><del>deleted after <%= deletion_time(@task) %></del></td>");
+  $('#task_<%= @task.id %>_table_row').fadeOut("slow");
+  $('#no_deleted_tasks').fadeOut();
+  $("<tr id=\"task_<%= @task.id %>_ajax_row\" class=\"bg-danger\"></tr>").fadeIn(1600, function() {
+    var trashIcon = "<a class=\"glyphicon glyphicon-trash\" title=\"Attention: if you continue, this task will be PERMANENTLY ERASED from the database.\" data-confirm=\"!!!ATTENTION!!!\nThe data of &quot; <%= @task.title %> &quot; task will be PERMANENTLY ERASED.\nDo you want to continue?\" data-remote=\"true\" rel=\"nofollow\" data-method=\"delete\" href=\"/tasks/<%= @task.id %>\"></a>";
+    $(this).prependTo('#deleted_tasks_table').html("<td class=\"text-muted\"><del><%= @task.title %></del></td><td class=\"text-muted\"><del>deleted after <%= deletion_time(@task) %></del></td><td class=\"text-muted\">" + trashIcon + "</td>");
+  });
 <% end %>
