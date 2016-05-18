@@ -11,20 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512003811) do
+ActiveRecord::Schema.define(version: 20160518152925) do
 
   create_table "tasks", force: :cascade do |t|
-    t.string   "title",             null: false
+    t.string   "title",                             null: false
     t.text     "notes"
-    t.datetime "expected_end_date", null: false
     t.boolean  "completed",         default: false
-    t.datetime "actual_end_date"
     t.boolean  "deleted",           default: false
     t.datetime "deletion_date"
     t.boolean  "uncompleted",       default: false
     t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.datetime "expected_end_date"
+    t.datetime "actual_end_date"
   end
 
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"
