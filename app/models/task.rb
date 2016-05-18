@@ -4,10 +4,6 @@ class Task < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3 }
   validates :expected_end_date, presence: true, if: :ends_after_now?
 
-  after_initialize { self.completed ||= false }
-  after_initialize { self.uncompleted ||= false }
-  after_initialize { self.deleted ||= false }
-
   scope :active, -> { where(:completed => false, :deleted => false, :uncompleted => false) }
   scope :completed, -> { where(completed: true) }
   scope :deleted, -> { where(deleted: true) }

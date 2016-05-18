@@ -1,8 +1,19 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-.table-heading {
-  background: #000;
-  color: #fff;
+.buttons {
+  padding-top: 20px;
+}
+.user-profile-info {
+}
+.user-profile-info ul {
+  padding-left: 0;
+  background-color: #f0f0f0;
+}
+.user-profile-info li {
+  list-style: none;
+}
+.avatar {
+  width: 70px;
+  vertical-align: bottom;
 }

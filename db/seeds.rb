@@ -6,12 +6,21 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-50.times do
+25.times do
   task = Task.create!(
     title: Faker::Lorem::sentence,
     created_at: Faker::Time.between(DateTime.now - 30, DateTime.now - 1),
-    expected_end_date: Faker::Time.between(DateTime.now.end_of_day, DateTime.now + 30),
+    expected_end_date: Faker::Time.between(DateTime.now, DateTime.now + 30),
     user_id: "1",
+  )
+end
+
+25.times do
+  task = Task.create!(
+    title: Faker::Lorem::sentence,
+    created_at: Faker::Time.between(DateTime.now - 30, DateTime.now - 1),
+    expected_end_date: Faker::Time.between(DateTime.now, DateTime.now + 30),
+    user_id: "2",
   )
 end
 
@@ -21,6 +30,15 @@ end
     created_at: Faker::Time.between(DateTime.now - 30, DateTime.now - 20),
     expected_end_date: Faker::Time.between(DateTime.now - 21, DateTime.now - 10),
     user_id: "1",
+  )
+end
+
+5.times do
+  task = Task.create!(
+    title: Faker::Lorem::sentence,
+    created_at: Faker::Time.between(DateTime.now - 30, DateTime.now - 20),
+    expected_end_date: Faker::Time.between(DateTime.now - 21, DateTime.now - 10),
+    user_id: "2",
   )
 end
 
