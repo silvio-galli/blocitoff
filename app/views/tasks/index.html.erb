@@ -1,0 +1,91 @@
+<div class="row tasks-index">
+  <div class="col-md-8 completed-tasks">
+    <h1>Active tasks</h1>
+    <table class="table table-hover">
+      <tr class="">
+        <th>your task</th>
+        <th>time left</th>
+        <th colspan="3" style="text-align: center; color: #fff; background-color: #000;">possible actions</th>
+      </tr>
+      <% @active_tasks.each do |task| %>
+        <tr id="task_<%= task.id %>_table_row">
+          <td><%= task.title %></td>
+          <td><%= time_left(task) %></td>
+          <td>
+            <%= form_for task, remote: true do |t| %>
+              <%= t.hidden_field :completed, id: "task_#{task.id}_completed", value: "1" %>
+              <%= t.submit "completed", class: 'btn btn-success', title: "Mark this task as completed. Good job!" %>
+            <% end %>
+          </td>
+          <td>
+            <%= form_for task, remote: true do |t| %>
+              <%= t.hidden_field :deleted, id: "task_#{task.id}_deleted", value: "1" %>
+              <%= t.submit "delete", class: 'btn btn-warning', title: "Mark as deleted but still hold it in the database." %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "erase", task, method: :delete, remote: true, class: 'btn btn-danger', title: "Attention: if you continue, this task will be PERMANENTLY ERASED from the database.", data: { confirm: "The data of this task will be PERMANENTLY ERASED. Do you want to continue?" } %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class=col-md-4>
+    <%= link_to "New Task", new_task_path, class: 'btn btn-primary' %>
+    <%= link_to "Profile Page", user_path(@user), class: 'btn btn-success' %>
+    <br />
+    <h3>Completed tasks</h3>
+      <% if @completed_tasks == [] %>
+        <h5 id="no_completed_tasks" class="text-muted">You do not have completed tasks</h5>
+        <table id="completed_tasks_table" class="table">
+        </table>
+      <% else %>
+        <table class="table" id="completed_tasks_table">
+          <% @completed_tasks.limit(5).each do |task| %>
+            <tr id="task_<%= task.id %>_table_row">
+              <td class="text-muted"><%= task.title %></td>
+              <td class="text-muted">completed in <%= completion_time(task) %></td>
+              <td class="text-muted">
+                <%= link_to "", task, method: :delete, remote: true, class: 'glyphicon glyphicon-trash', title: "Attention: if you continue, this task will be PERMANENTLY ERASED from the database.", data: { confirm: "ATTENTION!!\nThe data of \"#{task.title}\" task will be PERMANENTLY ERASED.\nDo you want to continue?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+
+    <h3>Deleted tasks</h3>
+      <% if @deleted_tasks == [] %>
+      <h5 id="no_deleted_tasks" class="text-muted">You do not have deleted tasks</h5>
+      <table id="deleted_tasks_table" class="table">
+      </table>
+      <% else %>
+        <table class="table" id="deleted_tasks_table">
+          <% @deleted_tasks.limit(5).each do |task| %>
+            <tr id="task_<%= task.id %>_table_row">
+              <td class="text-muted"><del><%= task.title %></del></td>
+              <td class="text-muted"><del>deleted after <%= deletion_time(task) %></del></td>
+              <td class="text-muted">
+                <%= link_to "", task, method: :delete, remote: true, class: 'glyphicon glyphicon-trash', title: "Attention: if you continue, this task will be PERMANENTLY ERASED from the database.", data: { confirm: "ATTENTION!!\nThe data of \"#{task.title}\" task will be PERMANENTLY ERASED.\nDo you want to continue?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+
+    <h3>Incompleted tasks</h3>
+      <% if @uncompleted_tasks == [] %>
+        <h5 id="no_deleted_tasks" class="text-muted">You do not have incompleted tasks</h5>
+      <% else %>
+        <table id="incompleted_tasks_table" class="table">
+          <% @uncompleted_tasks.limit(5).each do |task| %>
+            <tr id="task_<%= task.id %>_table_row">
+              <td class="text-muted"><del><%= task.title %></del></td>
+              <td class="text-muted">
+                <%= link_to "", task, method: :delete, remote: true, class: 'glyphicon glyphicon-trash', title: "Attention: if you continue, this task will be PERMANENTLY ERASED from the database.", data: { confirm: "ATTENTION!!\nThe data of \"#{task.title}\" task will be PERMANENTLY ERASED.\nDo you want to continue?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+  </div>
+</div>
