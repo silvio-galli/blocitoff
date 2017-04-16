@@ -19,7 +19,6 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'figaro'
 gem 'pry'
-gem 'faker'
 
 
 group :development, :test do
@@ -29,6 +28,7 @@ group :development, :test do
  gem 'rspec-rails'
  gem 'shoulda'
  gem 'factory_girl_rails'
+ gem 'faker'
 end
 
 gem 'bootstrap-sass'
